@@ -10,20 +10,28 @@ export default function App() {
     obtenerDatosStorage()
   }, []);
 
-  const GuardarDatos = async()=>{
-      try {
-        await AsyncStorage.setItem('nombre', inputText)
-        setNombreStorage(inputText)
-      } catch (error) {
-        console.log(error)
-      }
+  const GuardarDatos = async () => {
+    try {
+      await AsyncStorage.setItem('nombre', inputText)
+      setNombreStorage(inputText)
+    } catch (error) {
+      console.log(error)
+    }
   }
-  const obtenerDatosStorage = async()=>{
+  const obtenerDatosStorage = async () => {
     try {
       const nombre = await AsyncStorage.getItem('nombre')
       setNombreStorage(nombre)
     } catch (error) {
-      
+
+    }
+  }
+  const EliminarDatos = async () => {
+    try {
+      await AsyncStorage.removeItem('nombre')
+      setNombreStorage('')
+    } catch (error) {
+      console.log(error)
     }
   }
 
@@ -32,7 +40,11 @@ export default function App() {
 
       <StatusBar style="auto" />
       <View style={styles.container}>
-        <Text>{nombreStorage}</Text>
+        {
+          nombreStorage.length === 0 ?
+            <></> :
+            <Text>{nombreStorage}</Text>
+        }
         <TextInput
           placeholder='Escribe tu nombre'
           style={styles.input}
@@ -41,11 +53,19 @@ export default function App() {
         <Button
           title='guardar'
           color='#333'
-          onPress={()=>GuardarDatos()}
+          onPress={() => GuardarDatos()}
         />
-        <TouchableHighlight style={styles.btnEliminar}>
-          <Text style={styles.textoEliminar}>Eliminar Nombre</Text>
-        </TouchableHighlight>
+        {
+          nombreStorage ? (
+
+            <TouchableHighlight
+              onPress={() => EliminarDatos()}
+              style={styles.btnEliminar}>
+              <Text style={styles.textoEliminar}>Eliminar Nombre</Text>
+            </TouchableHighlight>
+
+          ) : null
+        }
       </View>
 
     </>
@@ -60,22 +80,22 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  input:{
-    borderColor:'#666',
-    borderBottomWidth:1,
-    width:300,
-    height:40,
+  input: {
+    borderColor: '#666',
+    borderBottomWidth: 1,
+    width: 300,
+    height: 40,
   },
-  btnEliminar:{
-    backgroundColor:'red',
-    marginTop:20,
-    padding:10,
+  btnEliminar: {
+    backgroundColor: 'red',
+    marginTop: 20,
+    padding: 10,
   },
-  textoEliminar:{
+  textoEliminar: {
     color: 'white',
-    fontWeight:'bold',
-    textAlign:'center',
-    textTransform:'uppercase',
+    fontWeight: 'bold',
+    textAlign: 'center',
+    textTransform: 'uppercase',
     width: 300,
   }
 });
