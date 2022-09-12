@@ -23,7 +23,7 @@ export default function App() {
       const nombre = await AsyncStorage.getItem('nombre')
       setNombreStorage(nombre)
     } catch (error) {
-
+      console.log(error)
     }
   }
   const EliminarDatos = async () => {
