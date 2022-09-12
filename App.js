@@ -5,6 +5,7 @@ import { useState, useEffect } from 'react';
 export default function App() {
 
   const [inputText, setInputText] = useState('');
+  const [nombreStorage, setNombreStorage] = useState('');
   useEffect(() => {
     obtenerDatosStorage()
   }, []);
@@ -12,6 +13,7 @@ export default function App() {
   const GuardarDatos = async()=>{
       try {
         await AsyncStorage.setItem('nombre', inputText)
+        setNombreStorage(inputText)
       } catch (error) {
         console.log(error)
       }
@@ -19,6 +21,7 @@ export default function App() {
   const obtenerDatosStorage = async()=>{
     try {
       const nombre = await AsyncStorage.getItem('nombre')
+      setNombreStorage(nombre)
     } catch (error) {
       
     }
@@ -29,6 +32,7 @@ export default function App() {
 
       <StatusBar style="auto" />
       <View style={styles.container}>
+        <Text>{nombreStorage}</Text>
         <TextInput
           placeholder='Escribe tu nombre'
           style={styles.input}
