@@ -1,10 +1,13 @@
 import { StyleSheet, Text, View, StatusBar, Button, TextInput, TouchableHighlight } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 export default function App() {
 
   const [inputText, setInputText] = useState('');
+  useEffect(() => {
+    obtenerDatosStorage()
+  }, []);
 
   const GuardarDatos = async()=>{
       try {
@@ -12,6 +15,13 @@ export default function App() {
       } catch (error) {
         console.log(error)
       }
+  }
+  const obtenerDatosStorage = async()=>{
+    try {
+      const nombre = await AsyncStorage.getItem('nombre')
+    } catch (error) {
+      
+    }
   }
 
   return (
