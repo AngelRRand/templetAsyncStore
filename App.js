@@ -1,6 +1,19 @@
 import { StyleSheet, Text, View, StatusBar, Button, TextInput, TouchableHighlight } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useState } from 'react';
 
 export default function App() {
+
+  const [inputText, setInputText] = useState('');
+
+  const GuardarDatos = async()=>{
+      try {
+        await AsyncStorage.setItem('nombre', inputText)
+      } catch (error) {
+        console.log(error)
+      }
+  }
+
   return (
     <>
 
@@ -9,10 +22,12 @@ export default function App() {
         <TextInput
           placeholder='Escribe tu nombre'
           style={styles.input}
+          onChangeText={text => setInputText(text)}
         />
         <Button
           title='guardar'
           color='#333'
+          onPress={()=>GuardarDatos()}
         />
         <TouchableHighlight style={styles.btnEliminar}>
           <Text style={styles.textoEliminar}>Eliminar Nombre</Text>
