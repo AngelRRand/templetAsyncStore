@@ -7,6 +7,7 @@ export default function App() {
       <StatusBar style="auto" />
       <View style={styles.container}>
         <TextInput
+          placeholder='Escribe tu nombre'
           style={styles.input}
         />
         <Button
